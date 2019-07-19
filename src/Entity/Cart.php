@@ -11,21 +11,21 @@ class Cart
 {
 
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
+     * @ORM\Id
+     * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $CartID;
+    private $id;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\User", inversedBy="CartID", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $UserID;
 
-    public function getCartID(): ?int
+    public function getID(): ?int
     {
-        return $this->CartID;
+        return $this->id;
     }
 
 

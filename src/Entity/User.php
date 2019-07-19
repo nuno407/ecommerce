@@ -4,14 +4,17 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ */
 class User
 {
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
+     * @ORM\Id
+     * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $UserID;
+    private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -50,10 +53,21 @@ class User
      */
     private $IsActive;
 
-
-    public function getUserID(): ?int
+    public function __construct(string $firstName, string $lastName, string $username, string $password)
     {
-        return $this->UserID;
+        $this->FirstName = $firstName;
+        $this->LastName = $lastName;
+        $this->Username = $username;
+        $this->HashedPassword = $password;
+        $this->Salt = random_int(0, 999999);
+        $this->IsActive = false;
+    }
+
+
+
+    public function getID(): ?int
+    {
+        return $this->id;
     }
 
     public function getFirstName(): ?string
@@ -97,9 +111,9 @@ class User
         return $this->HashedPassword;
     }
 
-    public function setHashedPassword($unhashedPassword)
+    public function setHashedPassword(string $unhashedPassword)
     {
-        $this->HashedPassword = unhashedPassword;
+        $this->HashedPassword = $unhashedPassword;
     }
 
     public function getPassword()
@@ -107,9 +121,9 @@ class User
         return $this->HashedPassword;
     }
 
-    public function setPassword($unhashedPassword)
+    public function setPassword(string $unhashedPassword)
     {
-        $this->HashedPassword = unhashedPassword;
+        $this->HashedPassword = $unhashedPassword;
     }
 
     public function getSalt($password)
@@ -127,18 +141,6 @@ class User
 
 
     public function setCartID(Cart $CartID): self
-    {
-        $this->CartID = $CartID;
-
-        // set the owning side of the relation if necessary
-        if ($this !== $CartID->getUserID()) {
-            $CartID->setUserID($this);
-        }
-
-        return $this;
-    }
-
-    public function getUserByID(Cart $CartID): self
     {
         $this->CartID = $CartID;
 

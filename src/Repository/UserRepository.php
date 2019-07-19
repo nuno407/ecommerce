@@ -6,12 +6,7 @@ use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
-/**
- * @method User|null find($id, $lockMode = null, $lockVersion = null)
- * @method User|null findOneBy(array $criteria, array $orderBy = null)
- * @method User[]    findAll()
- * @method User[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
- */
+
 class UserRepository extends ServiceEntityRepository
 {
     public function __construct(RegistryInterface $registry)
@@ -19,18 +14,39 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
-    // /**
-    //  * @return User[] Returns an array of User objects
-    //  */
-
-    public function findAllUsers($value)
+    public function getAllUsers($page, $limit)
     {
         return $this->createQueryBuilder('u')
-            ->orderBy('u.id', 'ASC')
-            ->setMaxResults(100)
+            ->setMaxResults($limit)
+            ->setFirstResult(($page-1) * $limit)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
+    }
+
+
+    public function deleteAllUsers()
+    {
+        return $this->createQueryBuilder('u')
+            ->delete()
+            ->getQuery()
+            ->execute();
+    }
+
+    public function getSpecificUser($id)
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.id = ' + $id)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function deleteSpecificUser($id)
+    {
+        return $this->createQueryBuilder('u')
+            ->delete()
+            ->where('u.id = ' + $id)
+            ->getQuery()
+            ->execute();
     }
 
     /*

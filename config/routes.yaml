@@ -18,16 +18,17 @@ create_user:
 delete_all_users:
   path: /users
   controller: App\Controller\UserController::deleteAllUsers
-  methods:  [GET]
-
-get_me_user:
-  path: /users/me
-  controller: App\Controller\UserController::getMeUser
+  methods:  [DELETE]
 
 get_specific_user:
   path: /users/{userID}
   controller: App\Controller\UserController::getSpecificUser
+  methods:  [GET]
 
+update_specific_user:
+  path: /users/me
+  controller: App\Controller\UserController::getMeUser
+  methods:  [PUT, PATCH]
 
 
 #catch_all:
