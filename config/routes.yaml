@@ -1,0 +1,35 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+api:
+  prefix: /
+  resource: '../src/Controller'
+
+get_all_users:
+  path: /users
+  controller: App\Controller\UserController::getAllUsers
+  methods:  [GET]
+
+create_user:
+  path: /users
+  controller: App\Controller\UserController::createUser
+  methods:  [POST]
+
+delete_all_users:
+  path: /users
+  controller: App\Controller\UserController::deleteAllUsers
+  methods:  [GET]
+
+get_me_user:
+  path: /users/me
+  controller: App\Controller\UserController::getMeUser
+
+get_specific_user:
+  path: /users/{userID}
+  controller: App\Controller\UserController::getSpecificUser
+
+
+
+#catch_all:
+#  path: /
+#  controller: App\Controller\UserController::sendEndpointNotFound
