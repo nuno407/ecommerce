@@ -1,0 +1,372 @@
+openapi: 3.0.1
+info:
+  title: Ecommerce REST API
+  description: |
+    This is the definition of a rest API to be comsumed by multiple different clients
+  version: 1.0.0
+
+paths:
+  /users:
+    get:
+      summary: Get all the available users. Pagination is available
+      operationId: GetAllUsers
+      tags:
+        - Admin Users Operations
+      responses:
+        200:
+          description: Get all the users in the requested
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        default:
+          description: other error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      summary: Create a new user
+      operationId: CreateUser
+      tags:
+        - Admin Users Operations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/schemas/User'
+        400:
+          $ref: '#/components/responses/badRequest'
+        401:
+          $ref: '#/components/responses/unauthorized'
+        403:
+          $ref: '#/components/responses/forbidden'
+        default:
+          $ref: '#/components/responses/otherError'
+    delete:
+      summary: Delete all users
+      operationId: DeleteAllUsers
+      tags:
+        - Admin Users Operations
+      responses:
+        200:
+          description: empty response
+          content: {}
+        401:
+          $ref: '#/components/responses/unauthorized'
+        403:
+          $ref: '#/components/responses/forbidden'
+        default:
+          $ref: '#/components/responses/otherError'
+
+
+  /users/{userID}:
+    get:
+      summary: Get all user info
+      operationId: GetMeUser
+      tags:
+        - Client/Admin Users Operations
+      parameters:
+        - name: userID
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Get all the users in the requested
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        401:
+          $ref: '#/components/responses/unauthorized'
+        403:
+          $ref: '#/components/responses/forbidden'
+        default:
+          $ref: '#/components/responses/otherError'
+    put:
+      summary: Update user
+      operationId: UpdateMeUser
+      tags:
+        - Client/Admin Users Operations
+      parameters:
+        - name: userID
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        200:
+          description: Get all the users in the requested
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        401:
+          $ref: '#/components/responses/unauthorized'
+        403:
+          $ref: '#/components/responses/forbidden'
+        default:
+          $ref: '#/components/responses/otherError'
+
+  /users/{userID}/basket:
+    get:
+      summary: Get user basket
+      operationId: GetUserBasket
+      tags:
+        - Client Users Basket Operations
+      parameters:
+        - name: userID
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Get all the users in the requested
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        401:
+          $ref: '#/components/responses/unauthorized'
+        403:
+          $ref: '#/components/responses/forbidden'
+        default:
+          $ref: '#/components/responses/otherError'
+    put:
+      summary: Update basket
+      operationId: UpdateUserBasket
+      tags:
+        - Client Users Basket Operations
+      parameters:
+        - name: userID
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        200:
+          description: Get all the users in the requested
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        401:
+          $ref: '#/components/responses/unauthorized'
+        403:
+          $ref: '#/components/responses/forbidden'
+        default:
+          $ref: '#/components/responses/otherError'
+
+  /products:
+    get:
+      summary: Get all the products users. Pagination is available
+      operationId: GetAllProducts
+      tags:
+        - Product Operations
+      responses:
+        200:
+          description: Get all the users in the requested
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        default:
+          description: other error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      summary: Create a new product
+      operationId: CreateProduct
+      tags:
+        - Admin Product Operations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/schemas/Product'
+        400:
+          $ref: '#/components/responses/badRequest'
+        401:
+          $ref: '#/components/responses/unauthorized'
+        403:
+          $ref: '#/components/responses/forbidden'
+        default:
+          $ref: '#/components/responses/otherError'
+    delete:
+      summary: Delete all products
+      description: Delete all products
+      operationId: DeleteAllProducts
+      tags:
+        - Admin Product Operations
+      responses:
+        200:
+          description: empty response
+          content: {}
+        401:
+          $ref: '#/components/responses/unauthorized'
+        403:
+          $ref: '#/components/responses/forbidden'
+        default:
+          $ref: '#/components/responses/otherError'
+
+  /product/{productID}:
+    get:
+      summary: Get product info
+      operationId: GetSpecificProduct
+      tags:
+        - Product Operations
+      parameters:
+        - name: productID
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Get all the users in the requested
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        401:
+          $ref: '#/components/responses/unauthorized'
+        403:
+          $ref: '#/components/responses/forbidden'
+        default:
+          $ref: '#/components/responses/otherError'
+    put:
+      summary: UpdateProduct
+      operationId: UpdateProduct
+      tags:
+        - Admin Product Operations
+      parameters:
+        - name: productID
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        200:
+          description: Get all the users in the requested
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        401:
+          $ref: '#/components/responses/unauthorized'
+        403:
+          $ref: '#/components/responses/forbidden'
+        default:
+          $ref: '#/components/responses/otherError'
+
+
+components:
+  schemas:
+    Product:
+      required:
+        - UserID
+        - FirstName
+        - LastName
+        - Username
+        - Email
+      properties:
+        UserID:
+          type: string
+        FirstName:
+          type: string
+        LastName:
+          type: string
+        Username:
+          type: string
+        Email:
+          type: string
+    User:
+      required:
+        - UserID
+        - FirstName
+        - LastName
+        - Username
+        - Email
+      properties:
+        UserID:
+          type: string
+        FirstName:
+          type: string
+        LastName:
+          type: string
+        Username:
+          type: string
+        Email:
+          type: string
+
+    Error:
+      required:
+        - message
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int64
+        message:
+          type: string
+
+  responses:
+    badRequest:
+      description: bad request
+      content: {}
+    unauthorized:
+      description: unauthorized access for a lack of authentication
+      content: {}
+    forbidden:
+      description: forbidden access for a lack of sufficient privileges
+      content: {}
+    otherError:
+      description: other error response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
