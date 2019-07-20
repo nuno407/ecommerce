@@ -15,15 +15,18 @@ The backend should be able to be used by mobile and web application providing, f
 
 ## Database schema
 
-
+![database](https://www.lucidchart.com/publicSegments/view/865fab47-8666-4d2d-ab84-c07d83dc6737/image.png)
 
 
 
 ##Machine Setup
+
+
 A windows 10 machine with ubuntu sub-runtime was used in this setup.
 
 
 ###Install php:
+
 
 sudo apt-get install php
 
@@ -33,7 +36,9 @@ sudo apt install php-sqlite3
 
 __Note:__For this project is used an sqlite database for easiness of development. Should be easy to use another database backend since we use "symfony/orm-pack"
 
+
 ###Install composer:
+
 
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 
@@ -43,12 +48,15 @@ php composer-setup.php
 
 php -r "unlink('composer-setup.php');"
 
+
 ###Install Symphony Framework
+
 
 wget https://get.symfony.com/cli/installer -O - | bash
 
 
 ###Install dependencies (npm install)
+
 
 composer install
 
@@ -59,9 +67,18 @@ composer install
 
 ##Setup Project
 
+
+Steps done to cretae the project
+
+
 ##Commands used during project
 
+
+Multiple commands using during project setup
+
+
 ###Create database and schema
+
 
 php bin/console doctrine:database:create
 
