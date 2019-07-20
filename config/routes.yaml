@@ -5,32 +5,58 @@ api:
   prefix: /
   resource: '../src/Controller'
 
+login:
+  path:       /login
+  controller: App\Controller\SecurityController::login
+  methods: POST
+
+logout:
+  path:       /logout
+  controller: App\Controller\SecurityController::login
+  methods: DELETE
+
 get_all_users:
-  path: /users
+  path: /api/users
   controller: App\Controller\UserController::getAllUsers
-  methods:  [GET]
+  methods:  GET
 
 create_user:
-  path: /users
+  path: /api/users
   controller: App\Controller\UserController::createUser
-  methods:  [POST]
+  methods:  POST
 
 delete_all_users:
-  path: /users
+  path: /api/users
   controller: App\Controller\UserController::deleteAllUsers
-  methods:  [DELETE]
+  methods:  DELETE
 
 get_specific_user:
-  path: /users/{userID}
+  path: /api/users/{userID}
   controller: App\Controller\UserController::getSpecificUser
-  methods:  [GET]
+  methods:  GET
+  requirements:
+    userID: '\d+'
+
+delete_specific_user:
+  path: /api/users/{userID}
+  controller: App\Controller\UserController::deleteSpecificUser
+  methods:  DELETE
+  requirements:
+    userID: '\d+'
 
 update_specific_user:
-  path: /users/me
-  controller: App\Controller\UserController::getMeUser
+  path: /api/users/{userID}
+  controller: App\Controller\UserController::updateSpecificUser
   methods:  [PUT, PATCH]
+  requirements:
+    userID: '\d+'
 
+get_me_user:
+  path: /api/users/me
+  controller: App\Controller\UserController::getMeUser
+  methods:  GET
 
-#catch_all:
-#  path: /
-#  controller: App\Controller\UserController::sendEndpointNotFound
+update_me_user:
+  path: /api/users/me
+  controller: App\Controller\UserController::updateMeUser
+  methods:  PUT, PATCH

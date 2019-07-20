@@ -20,7 +20,7 @@ class UserRepository extends ServiceEntityRepository
             ->setMaxResults($limit)
             ->setFirstResult(($page-1) * $limit)
             ->getQuery()
-            ->getResult();
+            ->getArrayResult();
     }
 
 
@@ -32,19 +32,21 @@ class UserRepository extends ServiceEntityRepository
             ->execute();
     }
 
-    public function getSpecificUser($id)
+    public function getSpecificUser($userID)
     {
         return $this->createQueryBuilder('u')
-            ->where('u.id = ' + $id)
+            ->where('u.id = :userid')
+            ->setParameter('userid', $userID)
             ->getQuery()
-            ->getResult();
+            ->getOneOrNullResult();
     }
 
-    public function deleteSpecificUser($id)
+    public function deleteSpecificUser($userID)
     {
         return $this->createQueryBuilder('u')
             ->delete()
-            ->where('u.id = ' + $id)
+            ->where('u.id = :userid')
+            ->setParameter('userid', $userID)
             ->getQuery()
             ->execute();
     }

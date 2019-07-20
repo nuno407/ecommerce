@@ -7,7 +7,7 @@ The backend should be able to be used by mobile and web application providing, f
 
 * Users should be able to create an client account.
 * Users should be able to add different products to their cart.
-* users should be able to add a shipping and billing address.
+* Users should be able to add a shipping and billing address.
 * Administrator accounts should be able to set the quantity of the products.
 * Administrators should be able to create platform-wide discounts.
 * Users should have the option to add discount coupon to their cart.

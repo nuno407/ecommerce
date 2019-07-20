@@ -3,11 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-class User
+class User implements UserInterface
 {
     /**
      * @ORM\Id
@@ -53,12 +54,8 @@ class User
      */
     private $IsActive;
 
-    public function __construct(string $firstName, string $lastName, string $username, string $password)
+    public function __construct()
     {
-        $this->FirstName = $firstName;
-        $this->LastName = $lastName;
-        $this->Username = $username;
-        $this->HashedPassword = $password;
         $this->Salt = random_int(0, 999999);
         $this->IsActive = false;
     }
@@ -126,7 +123,7 @@ class User
         $this->HashedPassword = $unhashedPassword;
     }
 
-    public function getSalt($password)
+    public function getSalt()
     {
         return $this->Salt;
     }
@@ -136,7 +133,9 @@ class User
         return array('CLIENT_USER');
     }
 
-
+    public function eraseCredentials()
+    {
+    }
 
 
 
