@@ -65,7 +65,6 @@ paths:
         default:
           $ref: '#/components/responses/otherError'
 
-
   /users/{userID}:
     get:
       summary: Get all user info
@@ -125,12 +124,14 @@ paths:
         default:
           $ref: '#/components/responses/otherError'
 
+
+
   /users/{userID}/basket:
     get:
       summary: Get user basket
       operationId: GetUserBasket
       tags:
-        - Client Users Basket Operations
+        - Client/Admin Users Basket Operations
       parameters:
         - name: userID
           in: path
@@ -139,13 +140,13 @@ paths:
             type: integer
       responses:
         200:
-          description: Get all the users in the requested
+          description: Ges user basket
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User'
+                  $ref: '#/components/schemas/Basket'
         401:
           $ref: '#/components/responses/unauthorized'
         403:
@@ -156,7 +157,7 @@ paths:
       summary: Update basket
       operationId: UpdateUserBasket
       tags:
-        - Client Users Basket Operations
+        - Client/Admin Users Basket Operations
       parameters:
         - name: userID
           in: path
@@ -167,16 +168,16 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: '#/components/schemas/Basket'
       responses:
         200:
-          description: Get all the users in the requested
+          description: Updated basket
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User'
+                  $ref: '#/components/schemas/Basket'
         401:
           $ref: '#/components/responses/unauthorized'
         403:
@@ -184,9 +185,130 @@ paths:
         default:
           $ref: '#/components/responses/otherError'
 
+
+
+  /users/{userID}/addresses:
+    get:
+      summary: Get user addresses
+      operationId: GetUserAdresses
+      tags:
+        - Client/Admin Users Address Operations
+      parameters:
+        - name: userID
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Ges user address
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Address'
+        401:
+          $ref: '#/components/responses/unauthorized'
+        403:
+          $ref: '#/components/responses/forbidden'
+        default:
+          $ref: '#/components/responses/otherError'
+    post:
+      summary: Create user address
+      operationId: CreateUserAddress
+      tags:
+        - Client/Admin Users Address Operations
+      parameters:
+        - name: userID
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Basket'
+      responses:
+        200:
+          description: Updated basket
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Basket'
+        401:
+          $ref: '#/components/responses/unauthorized'
+        403:
+          $ref: '#/components/responses/forbidden'
+        default:
+          $ref: '#/components/responses/otherError'
+
+  /users/{userID}/addresses/{addressID}:
+    get:
+      summary: Get user address
+      operationId: GetSpecificUserAdresses
+      tags:
+        - Client/Admin Users Address Operations
+      parameters:
+        - name: userID
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: addressID
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Ges user address
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Address'
+        401:
+          $ref: '#/components/responses/unauthorized'
+        403:
+          $ref: '#/components/responses/forbidden'
+        default:
+          $ref: '#/components/responses/otherError'
+    delete:
+      summary: Delete user address
+      operationId: DeleteUserAddress
+      tags:
+        - Client/Admin Users Address Operations
+      parameters:
+        - name: userID
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: addressID
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: empty response
+          content: {}
+        401:
+          $ref: '#/components/responses/unauthorized'
+        403:
+          $ref: '#/components/responses/forbidden'
+        default:
+          $ref: '#/components/responses/otherError'
+
+
+
+
   /products:
     get:
-      summary: Get all the products users. Pagination is available
+      summary: Get all the products. Pagination is available
       operationId: GetAllProducts
       tags:
         - Product Operations
@@ -244,7 +366,7 @@ paths:
         default:
           $ref: '#/components/responses/otherError'
 
-  /product/{productID}:
+  /products/{productID}:
     get:
       summary: Get product info
       operationId: GetSpecificProduct
@@ -264,7 +386,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User'
+                  $ref: '#/components/schemas/Product'
         401:
           $ref: '#/components/responses/unauthorized'
         403:
@@ -302,7 +424,122 @@ paths:
           $ref: '#/components/responses/forbidden'
         default:
           $ref: '#/components/responses/otherError'
+    delete:
+      summary: Delete speific product
+      description: Delete specific product
+      operationId: DeleteSpecificProduct
+      parameters:
+        - name: productID
+          in: path
+          required: true
+          schema:
+            type: integer
+      tags:
+        - Admin Product Operations
+      responses:
+        200:
+          description: empty response
+          content: {}
+        401:
+          $ref: '#/components/responses/unauthorized'
+        403:
+          $ref: '#/components/responses/forbidden'
+        default:
+          $ref: '#/components/responses/otherError'
 
+
+  /discounts:
+    get:
+      summary: Get all discounts
+      operationId: GetAllDiscounts
+      tags:
+        - Admin Discount Operations
+      responses:
+        200:
+          description: Get all the discounts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Discount'
+        default:
+          description: other error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      summary: Create a new discount
+      operationId: CreateDiscount
+      tags:
+        - Admin Discount Operations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Discount'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/schemas/User'
+        400:
+          $ref: '#/components/responses/badRequest'
+        401:
+          $ref: '#/components/responses/unauthorized'
+        403:
+          $ref: '#/components/responses/forbidden'
+        default:
+          $ref: '#/components/responses/otherError'
+
+  /discounts/{discountID}:
+    get:
+      summary: Get specific discounts
+      operationId: GetSpecificDiscount
+      tags:
+        - Admin Discount Operations
+      parameters:
+        - name: discountID
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Get all the users in the requested
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        401:
+          $ref: '#/components/responses/unauthorized'
+        403:
+          $ref: '#/components/responses/forbidden'
+        default:
+          $ref: '#/components/responses/otherError'
+    delete:
+      summary: Delete discount
+      operationId: DeleteDiscount
+      tags:
+        - Admin Discount Operations
+      parameters:
+        - name: discountID
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: empty response
+          content: {}
+        401:
+          $ref: '#/components/responses/unauthorized'
+        403:
+          $ref: '#/components/responses/forbidden'
+        default:
+          $ref: '#/components/responses/otherError'
 
 components:
   schemas:
@@ -342,6 +579,51 @@ components:
           type: string
         Email:
           type: string
+    Basket:
+      required:
+        - Products
+        - Discount
+        - BillingAddress
+        - ShippingAddress
+      properties:
+        Products:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+        Discount:
+          type: array
+          items:
+            $ref: '#/components/schemas/Discount'
+        BillingAddress:
+          $ref: '#/components/schemas/Address'
+        ShippingAddress:
+          $ref: '#/components/schemas/Address'
+
+    Address:
+      required:
+        - AdddressID
+        - Name
+        - Street
+      properties:
+        AddressID:
+          type: number
+        Name:
+          type: string
+        Street:
+          type: string
+
+    Discount:
+      required:
+        - DiscountID
+        - Name
+        - Value
+      properties:
+        AddressID:
+          type: number
+        Name:
+          type: string
+        Value:
+          type: number
 
     Error:
       required:
